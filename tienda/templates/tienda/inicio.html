@@ -1,0 +1,74 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<div class="banner">
+    <img src="{% static 'img/banner.jpg' %}" alt="Bienvenida">
+    <div class="banner-text">
+        <h1>Bienvenidos a Floralia</h1>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Productos Destacados</h2>
+    <div class="row justify-content-center">
+        {% for producto in productos_destacados %}
+        <div class="col-md-2 mb-4">  
+            <div class="card">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ producto.nombre }}</h6>
+                    <p>Precio: ${{ producto.precio|intcomma }} CLP</p>
+                    <a href="{% url 'tienda:detalle_producto' producto.pk %}" class="btn btn-primary btn-sm">Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="mt-5 mb-4">Herramientas de Jardinería</h2>
+    <div class="row justify-content-center">
+        {% for producto in herramientas %}
+        <div class="col-md-2 mb-4">  
+            <div class="card">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ producto.nombre }}</h6>
+                    <p>Precio: ${{ producto.precio|intcomma }} CLP</p>
+                    <a href="{% url 'tienda:detalle_producto' producto.pk %}" class="btn btn-primary btn-sm">Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="mt-5 mb-4">Macetas y Contenedores</h2>
+    <div class="row justify-content-center">
+        {% for producto in macetas %}
+        <div class="col-md-2 mb-4">  
+            <div class="card">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ producto.nombre }}</h6>
+                    <p>Precio: ${{ producto.precio|intcomma }} CLP</p>
+                    <a href="{% url 'tienda:detalle_producto' producto.pk %}" class="btn btn-primary btn-sm">Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

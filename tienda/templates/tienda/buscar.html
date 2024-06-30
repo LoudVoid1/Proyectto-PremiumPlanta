@@ -1,0 +1,30 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+{% block title %}Resultados de Búsqueda{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Resultados de Búsqueda</h2>
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">${{ producto.precio }}</p>
+                    <a href="{% url 'tienda:detalle_producto' producto.pk %}" class="btn btn-primary">Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No se encontraron productos.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

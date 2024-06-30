@@ -1,0 +1,39 @@
+{% extends 'tienda/base.html' %}
+{% load carrito_extra %}
+{% block title %}Tu Carrito{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Tu Carrito</h2>
+    {% if carrito.items.exists %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrito.items.all %}
+            <tr>
+                <td><img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}" style="width: 50px;"></td>
+                <td>{{ item.producto.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ item.producto.precio }}</td>
+                <td>${{ item.producto.precio|multiply:item.cantidad }}</td>
+                <td>
+                    <a href="{% url 'carrito:eliminar_del_carrito' item.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Tu carrito está vacío.</p>
+    {% endif %}
+</div>
+{% endblock %}

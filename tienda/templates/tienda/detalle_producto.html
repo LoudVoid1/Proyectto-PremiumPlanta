@@ -1,0 +1,30 @@
+{% extends 'tienda/base.html' %}
+{% block title %}{{ producto.nombre }}{% endblock %}
+{% load humanize %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ producto.imagen.url }}" class="img-fluid" alt="{{ producto.nombre }}">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ producto.nombre }}</h2>
+            <p>{{ producto.descripcion }}</p>
+            <p>Precio: ${{ producto.precio|intcomma }} CLP</p>
+            {% if producto.disponible %}
+            <form method="post" action="{% url 'tienda:detalle_producto' producto.pk %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="cantidad" class="form-label">Cantidad</label>
+                    <input type="number" name="cantidad" id="cantidad" value="1" min="1" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Añadir al carrito</button>
+            </form>
+            {% else %}
+            <p class="text-danger">No disponible</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
